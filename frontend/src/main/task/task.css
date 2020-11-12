@@ -1,0 +1,91 @@
+.taskContainer
+{
+    position: relative;
+
+    height: 27px;
+    min-width: 82px;
+    width: auto;
+    margin: 0px 3px 0px 0px; 
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    background-color: #7b8da3;
+    opacity: .7;
+
+    border-radius: 4px 4px 0px 0px;
+
+    cursor: pointer;
+}
+
+.taskContainer.true
+{
+    height: 30px;
+
+    opacity: 1;
+}
+
+.taskContainer.Map
+{
+    margin: 0px 3px 0px 5px;
+}
+
+.standardizeWidth
+{
+    height: auto;
+    min-width: 55px;
+
+    margin: 0px 20px 0px 0px;
+}
+
+.standardizeWidth.Map
+{
+    margin: 0px 42px 0px 0px;
+}
+
+.taskLabel
+{
+    position: relative;
+    left: 8px;
+
+    max-width: 55px;
+
+    margin: 0;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.taskLabel.true
+{
+    max-width: none;
+}
+
+.closeIcon
+{
+    height: 12px;
+    width: 12px;
+
+    margin: 0px 10px 0px 0px;
+
+    visibility: hidden;
+}
+
+.closeIcon.true
+{
+    visibility: visible;
+}
+
+.taskContainer:hover > .closeIcon
+{
+    visibility: visible;
+}
+
+.hidden
+{
+    visibility: hidden;
+}

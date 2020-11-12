@@ -1,0 +1,40 @@
+.textInputContainer
+{
+    height: 60px;
+    width: 200px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    color: #484847;
+}
+
+.textInputLabel
+{
+    margin: 0px 0px 5px 0px;
+    
+    font-weight: 600;
+}
+
+.textInput
+{
+    padding: 5px 5px 5px 5px;
+
+    border: 1.5px solid #484847;
+    border-radius: 5px;
+
+    outline: none;
+
+    background-color: #e7e9e2;
+    opacity: .7;
+
+    -webkit-box-shadow: inset 0 0 2px rgb(0, 0, .7);
+    box-shadow: inset 0 0 2px  rgb(0, 0, .7);
+}
+
+.textInput:focus
+{
+    outline: none;
+}

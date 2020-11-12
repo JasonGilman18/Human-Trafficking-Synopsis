@@ -1,0 +1,63 @@
+.sliderInputContainer
+{
+    height: 60px;
+    width: 200px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    color: #484847;
+}
+
+.sliderInputLabel
+{
+    margin: 0px 0px 5px 0px;
+    
+    font-weight: 600;
+}
+
+.sliderInput
+{
+    height: 25px;
+    width: 175px;
+
+    background-color: #7b8da3;
+
+    outline: none;
+
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    -webkit-appearance: none;
+
+    opacity: .7;
+
+    -webkit-box-shadow: 0 0 3px rgb(0, 0, .7);
+    box-shadow: 0 0 3px  rgb(0, 0, .7);
+
+    border-radius: 5px;
+}
+
+.sliderInput:hover
+{
+    opacity: 1;
+}
+
+.sliderInput::-webkit-slider-thumb
+{
+    height: 30px;
+    width: 30px;
+
+    background-color: #484847;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    -webkit-box-shadow: 0 0 3px rgb(0, 0, .7);
+    box-shadow: 0 0 3px  rgb(0, 0, .7);
+}
