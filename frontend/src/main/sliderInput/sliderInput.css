@@ -8,12 +8,14 @@
     justify-content: center;
     align-items: flex-start;
 
-    color: #484847;
+    color: #81817e;
 }
 
 .sliderInputLabel
 {
     margin: 0px 0px 5px 0px;
+
+    color: #484847;
     
     font-weight: 600;
 }
@@ -31,17 +33,20 @@
     transition: opacity .2s;
     -webkit-appearance: none;
 
-    opacity: .7;
-
     -webkit-box-shadow: 0 0 3px rgb(0, 0, .7);
     box-shadow: 0 0 3px  rgb(0, 0, .7);
 
     border-radius: 5px;
 }
 
+.sliderInput:hover::-webkit-slider-thumb
+{
+    background-color: #676765;
+}
+
 .sliderInput:hover
 {
-    opacity: 1;
+    background-color: #697d96;
 }
 
 .sliderInput::-webkit-slider-thumb
@@ -49,7 +54,7 @@
     height: 30px;
     width: 30px;
 
-    background-color: #484847;
+    background-color: #81817e;
 
     border-radius: 6px;
 
@@ -58,6 +63,6 @@
     -webkit-appearance: none;
     appearance: none;
 
-    -webkit-box-shadow: 0 0 3px rgb(0, 0, .7);
-    box-shadow: 0 0 3px  rgb(0, 0, .7);
+    -webkit-box-shadow: 0 0 1.5px rgb(0, 0, .7);
+    box-shadow: 0 0 1.5px  rgb(0, 0, .7);
 }

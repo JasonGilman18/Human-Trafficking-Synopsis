@@ -14,7 +14,7 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
     {
         super(props);
 
-        var mapCenter = Leaflet.latLng(30.6188, -96.3365);
+        var mapCenter = Leaflet.latLng(39.8283, -98.5795);
 
         this.state = {mapCenter: mapCenter};
     }

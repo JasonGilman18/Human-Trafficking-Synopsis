@@ -2,12 +2,10 @@ import React from 'react';
 import Header from './header/header';
 import TextInput from './textInput/textInput';
 import SliderInput from './sliderInput/sliderInput';
-import Task from './task/task';
+import Task, {Task_Data} from './task/task';
+import View, {View_Data} from './view/view';
 import './main.css';
 
-
-interface Task_Data {status: boolean, name: string, type: string, close: boolean};
-interface View_Data {status: boolean, name: string};
 
 type MainProps = {};
 type MainStates = {tasks: Array<Task_Data>, views: Array<View_Data>};
@@ -17,13 +15,13 @@ class Main extends React.Component<MainProps, MainStates>
     {
         super(props);
         
-        var map_task: Task_Data = {status: true, name: "Map", type: "map", close: false};
-        var graph_task: Task_Data = {status: false, name: "Graph", type: "graph", close: true};
-        var table_task: Task_Data = {status: false, name: "Table name is realy", type: "table", close: true};
+        var map_task: Task_Data = {status: true, name: "Map", close: false};
+        var graph_task: Task_Data = {status: false, name: "Graph", close: true};
+        var table_task: Task_Data = {status: false, name: "Table name is realy", close: true};
 
-        var map_view: View_Data = {status: true, name: "map"};
-        var graph_view: View_Data = {status: false, name: "graph"};
-        var table_view: View_Data = {status: false, name: "table"};
+        var map_view: View_Data = {status: true, name: "map", type: "map"};
+        var graph_view: View_Data = {status: false, name: "graph", type: "graph"};
+        var table_view: View_Data = {status: false, name: "table", type: "table"};
         
         this.state = {tasks: [map_task, graph_task, table_task], views: [map_view, graph_view, table_view]};
 
@@ -76,13 +74,18 @@ class Main extends React.Component<MainProps, MainStates>
                 <Header></Header>
                 <div className="middleContainer">
                     <div className="inputContainer">
-                        <div className="inputTypeContainer">
-                            <TextInput label="input 1" placeholder="placeholder for input"></TextInput>
-                            <TextInput label="input 2" placeholder="placeholder for input"></TextInput>
+                        <div className="typeContainer">
+                            <div className="inputTypeContainer">
+                                <TextInput label="input 1" placeholder="placeholder for input"></TextInput>
+                                <TextInput label="input 2" placeholder="placeholder for input"></TextInput>
+                            </div>
+                            <div className="inputTypeContainer">
+                                <SliderInput label="input3" minVal="0" maxVal="100" step="1"></SliderInput>
+                                <SliderInput label="input4" minVal="0" maxVal="100" step="1"></SliderInput>
+                            </div>
                         </div>
-                        <div className="inputTypeContainer">
-                            <SliderInput label="input3" minVal="0" maxVal="100" step="1"></SliderInput>
-                            <SliderInput label="input4" minVal="0" maxVal="100" step="1"></SliderInput>
+                        <div className="searchContainer">
+                            <button className="searchBtn">Search</button>
                         </div>
                     </div>
                     <div className="outputContainer">
@@ -90,7 +93,7 @@ class Main extends React.Component<MainProps, MainStates>
                             {
                                 this.state.tasks.map((task, index) => (
 
-                                    <Task index={index} taskStatus={task.status} name={task.name} type={task.type} close={task.close} func_onUpdateTask={this.updateTask.bind(this)}></Task>
+                                    <Task index={index} data={task} func_onUpdateTask={this.updateTask.bind(this)}></Task>
                                 ))
                             }
                         </div>
@@ -98,7 +101,7 @@ class Main extends React.Component<MainProps, MainStates>
                             {
                                 this.state.views.map((view, index) => (
 
-                                    <h6 className={view.status ? "" : "hidden"}>{view.name}</h6>
+                                    <View index={index} data={view}></View>
                                 ))
                             }
                         </div>
