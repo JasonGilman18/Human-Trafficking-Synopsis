@@ -9,11 +9,6 @@ import * as countryData from '../../database/countries.json';
 
 type LeafMapProps = {};
 type LeafMapStates = { mapCenter: Leaflet.LatLng };
-const fillBlueOptions = { fillColor: 'blue' }
-const blackOptions = { color: 'black' }
-const limeOptions = { color: 'lime' }
-const purpleOptions = { color: 'purple' }
-const redOptions = { color: 'red' }
 
 class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
 {
@@ -37,6 +32,10 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             </MapContainer>
         );
+    }
+
+    markerArray() {
+
     }
 }
 
