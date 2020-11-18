@@ -5,11 +5,11 @@ import { Popup, TileLayer, Marker, Rectangle, MapContainer, Circle } from 'react
 import 'leaflet/dist/leaflet.css';
 import './leafletMap.css';
 import pinIcon from './icons/pin.png';
-import * as countryData from '../../database/countries.json';
+import countryData from '../../database/countries.json';
+
 
 type LeafMapProps = {};
 type LeafMapStates = { mapCenter: Leaflet.LatLng };
-
 class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
 {
     constructor(props: any) {

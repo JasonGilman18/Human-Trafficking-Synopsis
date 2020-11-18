@@ -1,5 +1,6 @@
 import React from 'react';
 import LeafMap from './leafletMap/leafletMap';
+import Graph from './graph/graph';
 import './view.css';
 
 
@@ -23,9 +24,7 @@ class View extends React.Component<ViewProps, ViewStates>
                 return (
 
                     <div className={this.props.data.status ? "mapContainer" : "hidden"}>
-                        <LeafMap>
-
-                        </LeafMap>
+                        <LeafMap></LeafMap>
                     </div>
                 );
 
@@ -34,7 +33,7 @@ class View extends React.Component<ViewProps, ViewStates>
                     return (
 
                         <div className={this.props.data.status ? "graphContainer" : "hidden"}>
-                            <h1>Graph</h1>
+                            <Graph></Graph>
                         </div>
                     );
 
