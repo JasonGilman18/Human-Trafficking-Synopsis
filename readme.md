@@ -10,5 +10,5 @@
 </p>
 <h1>Run Instructions</h1>
 <p>
-    1) Run command "npm start" in a command prompt from the root folder
+    1) Run command "npm start" in a command prompt from "frontend/" dir
 </p>
