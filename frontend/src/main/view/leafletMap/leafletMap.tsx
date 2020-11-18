@@ -35,14 +35,6 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
         return (
             <MapContainer id="mapid" center={this.state.mapCenter} zoom={4} minZoom={4}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                {countryData.map(country => (
-                    <Marker 
-                        key={country.COUNTRY} 
-                        position={
-                            Leaflet.latLng(0, 0)
-                        }
-                    />
-                ))}
             </MapContainer>
         );
     }
