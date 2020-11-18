@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Leaflet, { divIcon } from 'leaflet';
-import { TileLayer, Marker, Rectangle, MapContainer, Circle } from 'react-leaflet';
+import { Popup, TileLayer, Marker, Rectangle, MapContainer, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './leafletMap.css';
 import pinIcon from './icons/pin.png';
@@ -39,7 +39,7 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
                     <Marker 
                         key={country.COUNTRY} 
                         position={
-                            Leaflet.latLng(Number(country.LATITUDE), Number(country.LONGITUDE))
+                            Leaflet.latLng(country.LATITUDE, country.LONGITUDE)
                         }
                     />
                 ))}
