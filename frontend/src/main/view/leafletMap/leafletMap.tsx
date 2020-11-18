@@ -28,9 +28,9 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
         });
 
         return (
-            
             <MapContainer id="mapid" center={this.state.mapCenter} zoom={4} minZoom={4}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+                <Marker position={[39.8283, -98.5795]}></Marker>
             </MapContainer>
         );
     }
