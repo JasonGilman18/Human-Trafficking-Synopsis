@@ -39,7 +39,7 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
                     <Marker 
                         key={country.COUNTRY} 
                         position={
-                            Leaflet.latLng(country.LATITUDE, country.LONGITUDE)
+                            Leaflet.latLng(0, 0)
                         }
                     />
                 ))}
