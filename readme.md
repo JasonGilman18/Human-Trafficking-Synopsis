@@ -1,6 +1,6 @@
 <h1>Installation Instructions</h1>
 <p>
-    1) Install nodeJS on your computer
+    1) Install nodeJS on your computer -> <a href="https://nodejs.org/en/download/">Install Here</a>
     <br>
     2) Git clone this repo
     <br>
