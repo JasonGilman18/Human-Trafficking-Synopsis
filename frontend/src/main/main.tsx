@@ -48,6 +48,7 @@ class Main extends React.Component<MainProps, MainStates>
         }
         else
         {
+            
             for(var i=0;i<tempTasks.length;i++)
             {
                 if(i==taskIndex)
@@ -61,6 +62,7 @@ class Main extends React.Component<MainProps, MainStates>
                     tempViews[i].status = false;
                 }  
             }
+            console.log(tempTasks)
         }
         
         this.setState({tasks: tempTasks, views: tempViews});

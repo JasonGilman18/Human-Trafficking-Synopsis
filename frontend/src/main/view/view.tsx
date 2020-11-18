@@ -6,22 +6,12 @@ import './view.css';
 interface View_Data {status: boolean, name: string, type: string};
 
 type ViewProps = {index: number, data: View_Data};
-type ViewStates = {status: boolean};
+type ViewStates = {};
 class View extends React.Component<ViewProps, ViewStates>
 {
     constructor(props: any)
     {
         super(props);
-
-        this.state = {status: this.props.data.status};
-    }
-
-    componentDidUpdate(prevProps: any)
-    {
-       if(this.props.data.status !== prevProps.data.status)
-       {
-            this.setState({status: this.props.data.status});
-       }    
     }
 
     render()
@@ -32,7 +22,7 @@ class View extends React.Component<ViewProps, ViewStates>
 
                 return (
 
-                    <div className={this.state.status ? "mapContainer" : "hidden"}>
+                    <div className={this.props.data.status ? "mapContainer" : "hidden"}>
                         <LeafMap>
 
                         </LeafMap>
@@ -43,7 +33,7 @@ class View extends React.Component<ViewProps, ViewStates>
 
                     return (
 
-                        <div className={this.state.status ? "graphContainer" : "hidden"}>
+                        <div className={this.props.data.status ? "graphContainer" : "hidden"}>
                             <h1>Graph</h1>
                         </div>
                     );
@@ -52,7 +42,7 @@ class View extends React.Component<ViewProps, ViewStates>
                     
                     return (
 
-                        <div className={this.state.status ? "tableContainer" : "hidden"}>
+                        <div className={this.props.data.status ? "tableContainer" : "hidden"}>
                             <h1>Table</h1>
                         </div>
                     );
