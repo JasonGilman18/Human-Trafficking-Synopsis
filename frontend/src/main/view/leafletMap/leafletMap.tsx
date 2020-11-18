@@ -5,7 +5,7 @@ import { TileLayer, Marker, Rectangle, MapContainer, Circle } from 'react-leafle
 import 'leaflet/dist/leaflet.css';
 import './leafletMap.css';
 import pinIcon from './icons/pin.png';
-import '../database/countries.json';
+import '../../database/countries.json';
 
 type LeafMapProps = {};
 type LeafMapStates = { mapCenter: Leaflet.LatLng };
