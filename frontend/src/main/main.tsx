@@ -13,7 +13,7 @@ interface DB_ROW {index: string, year: string, region_index: string, region: str
 
 
 type MainProps = {};
-type MainStates = {tasks: Array<Task_Data>, views: Array<View_Data>};
+type MainStates = {tasks: Array<Task_Data>, views: Array<View_Data>, sampleData: Array<DB_ROW>};
 class Main extends React.Component<MainProps, MainStates>
 {
     constructor(props: any)
@@ -28,7 +28,7 @@ class Main extends React.Component<MainProps, MainStates>
         var graph_view: View_Data = {status: false, name: "graph", type: "graph"};
         var table_view: View_Data = {status: false, name: "table", type: "table"};
         
-        this.state = {tasks: [map_task, graph_task, table_task], views: [map_view, graph_view, table_view]};
+        this.state = {tasks: [map_task, graph_task, table_task], views: [map_view, graph_view, table_view], sampleData: []};
 
         this.updateTask = this.updateTask.bind(this);
         this.callDB = this.callDB.bind(this);
@@ -74,16 +74,22 @@ class Main extends React.Component<MainProps, MainStates>
         this.setState({tasks: tempTasks, views: tempViews});
     }
 
-    async callDB(sql_command: string): Promise<Array<DB_ROW>>
+    async callDB(sql_command: string)
     {
         ipcRenderer.send('db', sql_command);
 
-        return new Promise(resolve => {
+        const db_call = new Promise(resolve => {
             
             ipcRenderer.on('db', (event: any, arg: any) => {
                 
                 resolve(arg);
             });
+        });
+
+        db_call.then((data: any) => {
+
+            this.setState({sampleData: data});
+            console.log(this.state.sampleData);
         });
     }
 
@@ -106,7 +112,7 @@ class Main extends React.Component<MainProps, MainStates>
                             </div>
                         </div>
                         <div className="searchContainer">
-                            <button className="searchBtn">Search</button>
+                            <button className="searchBtn" onClick={() => this.callDB("SELECT * FROM human_offenses_clearance;")}>Search</button>
                         </div>
                     </div>
                     <div className="outputContainer">
@@ -122,7 +128,7 @@ class Main extends React.Component<MainProps, MainStates>
                             {
                                 this.state.views.map((view, index) => (
 
-                                    <View index={index} data={view} func_callDB={this.callDB.bind(this)}></View>
+                                    <View index={index} data={view}></View>
                                 ))
                             }
                         </div>

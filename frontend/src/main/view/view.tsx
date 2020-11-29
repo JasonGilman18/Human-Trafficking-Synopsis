@@ -7,7 +7,7 @@ import './view.css';
 
 interface View_Data {status: boolean, name: string, type: string};
 
-type ViewProps = {index: number, data: View_Data, func_callDB: ((sql_command: string) => Promise<Array<DB_ROW>>)};
+type ViewProps = {index: number, data: View_Data};
 type ViewStates = {};
 class View extends React.Component<ViewProps, ViewStates>
 {
@@ -15,6 +15,32 @@ class View extends React.Component<ViewProps, ViewStates>
     {
         super(props);
     }
+
+    /*
+    componentDidMount()
+    {
+        var regions = new Map<string, number>();
+
+        const db_call = this.props.func_callDB("SELECT * FROM human_offenses_clearance;");
+        db_call.then((data) => {
+
+            for(var row of data)
+            {
+                var current_occurences = regions.get(row.region);
+
+                if(current_occurences)
+                    regions.set(row.region, current_occurences + parseInt(row.occurrence));
+                else
+                    regions.set(row.region, parseInt(row.occurrence));
+            }
+
+            //in another function
+            //figure out how to size the hotspots based on the number in Map
+            //create hotspots and add them to state
+            //in HTML add hotspots
+        });
+    }
+    */
 
     render()
     {
@@ -25,7 +51,7 @@ class View extends React.Component<ViewProps, ViewStates>
                 return (
 
                     <div className={this.props.data.status ? "mapContainer" : "hidden"}>
-                        <LeafMap func_callDB={this.props.func_callDB}></LeafMap>
+                        <LeafMap></LeafMap>
                     </div>
                 );
 

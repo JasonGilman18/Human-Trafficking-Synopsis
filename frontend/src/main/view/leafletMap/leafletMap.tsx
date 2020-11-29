@@ -8,7 +8,7 @@ import './leafletMap.css';
 import pinIcon from './icons/pin.png';
 
 
-type LeafMapProps = {func_callDB: ((sql_command: string) => Promise<Array<DB_ROW>>)};
+type LeafMapProps = {};
 type LeafMapStates = { mapCenter: Leaflet.LatLng };
 class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
 {
@@ -18,30 +18,6 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
         var mapCenter = Leaflet.latLng(39.8283, -98.5795);
 
         this.state = { mapCenter: mapCenter };
-    }
-
-    componentDidMount()
-    {
-        var regions = new Map<string, number>();
-
-        const db_call = this.props.func_callDB("SELECT * FROM human_offenses_clearance;");
-        db_call.then((data) => {
-
-            for(var row of data)
-            {
-                var current_occurences = regions.get(row.region);
-
-                if(current_occurences)
-                    regions.set(row.region, current_occurences + parseInt(row.occurrence));
-                else
-                    regions.set(row.region, parseInt(row.occurrence));
-            }
-
-            //in another function
-            //figure out how to size the hotspots based on the number in Map
-            //create hotspots and add them to state
-            //in HTML add hotspots
-        });
     }
 
     render() {
