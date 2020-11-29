@@ -1,10 +1,16 @@
 const electron = require('electron');
+const sqlite3 = require('sqlite3');
 const app = electron.app;
 const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 
 
 let mainWindow;
+
+
+const database = new sqlite3.Database('./../database/project.db', (err) => {
+    if (err) console.error('Database opening error: ', err);
+});
 
 
 app.on('ready', function(){
@@ -54,4 +60,19 @@ ipcMain.on('toolbar', (event, arg) => {
         mainWindow.unmaximize();
         event.sender.send("toolbar", false);
     }
+});
+
+
+ipcMain.on('db', (event, arg) => {
+
+    const sql_command = arg;
+    const db_call = new Promise(resolve => {
+        
+        database.all(sql_command, (err, rows) => {
+        
+            resolve(rows);
+        });
+    });
+
+    db_call.then((data) => event.sender.send('db', data));
 });

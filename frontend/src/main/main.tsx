@@ -6,6 +6,11 @@ import Task, {Task_Data} from './task/task';
 import View, {View_Data} from './view/view';
 import './main.css';
 
+const {ipcRenderer} = window.require('electron');
+
+
+interface DB_ROW {index: string, year: string, region_index: string, region: string, state: string, offense: string, occurrence: string, age: string, cleared: string, population: string, occ_per_100k: string, clr_per_100k: string};
+
 
 type MainProps = {};
 type MainStates = {tasks: Array<Task_Data>, views: Array<View_Data>};
@@ -26,6 +31,7 @@ class Main extends React.Component<MainProps, MainStates>
         this.state = {tasks: [map_task, graph_task, table_task], views: [map_view, graph_view, table_view]};
 
         this.updateTask = this.updateTask.bind(this);
+        this.callDB = this.callDB.bind(this);
     }
 
     updateTask(event: React.MouseEvent<HTMLElement>, taskIndex: number, close: boolean)
@@ -68,6 +74,19 @@ class Main extends React.Component<MainProps, MainStates>
         this.setState({tasks: tempTasks, views: tempViews});
     }
 
+    async callDB(sql_command: string): Promise<Array<DB_ROW>>
+    {
+        ipcRenderer.send('db', sql_command);
+
+        return new Promise(resolve => {
+            
+            ipcRenderer.on('db', (event: any, arg: any) => {
+                
+                resolve(arg);
+            });
+        });
+    }
+
     render()
     {
         return (
@@ -103,7 +122,7 @@ class Main extends React.Component<MainProps, MainStates>
                             {
                                 this.state.views.map((view, index) => (
 
-                                    <View index={index} data={view}></View>
+                                    <View index={index} data={view} func_callDB={this.callDB.bind(this)}></View>
                                 ))
                             }
                         </div>
@@ -115,3 +134,4 @@ class Main extends React.Component<MainProps, MainStates>
 }
 
 export default Main;
+export type {DB_ROW};
