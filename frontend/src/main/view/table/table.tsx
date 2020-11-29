@@ -6,7 +6,7 @@ import './table.css';
 
 type TableProps = {};
 type TableStates = {};
-class Table extends React.Component
+class Table extends React.Component<TableProps, TableStates>
 {
     constructor(props: any)
     {
