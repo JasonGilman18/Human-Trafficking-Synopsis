@@ -15,7 +15,7 @@ interface DB_ROW {index: string, year: string, region_index: string, region: str
 
 
 type MainProps = {};
-type MainStates = {tasks: Array<Task_Data>, views: Array<View_Data>, sampleData: Array<DB_ROW>};
+type MainStates = {tasks: Array<Task_Data>, views: Array<View_Data>, inputData: Map<string, string>, sampleData: Array<DB_ROW>};
 class Main extends React.Component<MainProps, MainStates>
 {
     constructor(props: any)
@@ -29,10 +29,13 @@ class Main extends React.Component<MainProps, MainStates>
         var map_view: View_Data = {status: true, name: "map", type: "map"};
         var graph_view: View_Data = {status: false, name: "graph", type: "graph"};
         var table_view: View_Data = {status: false, name: "table", type: "table"};
-        
-        this.state = {tasks: [map_task, graph_task, table_task], views: [map_view, graph_view, table_view], sampleData: []};
+
+        var temp_input_data: Map<string, string> = new Map([["year_2014", ""], ["year_2015", ""], ["year_2016", ""], ["year_2017", ""], ["type1", ""], ["type2", ""], ["area", "region"], ["age1", "0"], ["age2", "100"], ["occurances1", "0"], ["occurances2", "100"], ["clearances1", "0"], ["clearances2", "100"]]);
+
+        this.state = {tasks: [map_task, graph_task, table_task], views: [map_view, graph_view, table_view], inputData: temp_input_data, sampleData: []};
 
         this.updateTask = this.updateTask.bind(this);
+        this.handleFormInput = this.handleFormInput.bind(this);
         this.callDB = this.callDB.bind(this);
         this.search = this.search.bind(this);
     }
@@ -77,40 +80,47 @@ class Main extends React.Component<MainProps, MainStates>
         this.setState({tasks: tempTasks, views: tempViews});
     }
 
+    handleFormInput(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, input: string)
+    {
+        var temp_input_data: Map<string, string> = this.state.inputData;
+        temp_input_data.set(input, e.currentTarget.value);
+        this.setState({inputData: temp_input_data});
+    }
+
     search(e: React.FormEvent<HTMLFormElement>)
     {
         e.preventDefault();
 
         //capture inputs
         //create query
-        //based on query then deal with returned data (create markers, rectangles etc)
+        //call db with query
+        const sql_command = this.createQuery(this.state.inputData);
+        this.callDB(sql_command).then((data: any) => {
 
-        //combo button for year
-        //combo box for type of offense
-        //dropdown for region or state level
-        //slider for age
-        //text input for for number of occurances
-        //text input for number of clearances
+            //based on query then deal with returned data (create markers, rectangles etc)
+            //call functions to create map, graph, table
+            this.setState({sampleData: data});
+            console.log(this.state.sampleData);
+        });
+    }
 
-        this.callDB("SELECT * FROM human_offenses_clearance;");
+    createQuery(input: Map<string, string>)
+    {
+        var sql_command = "SELECT * FROM human_offenses_clearance";
+
+        return sql_command;
     }
 
     async callDB(sql_command: string)
     {
         ipcRenderer.send('db', sql_command);
 
-        const db_call = new Promise(resolve => {
+        return new Promise(resolve => {
             
             ipcRenderer.on('db', (event: any, arg: any) => {
                 
                 resolve(arg);
             });
-        });
-
-        db_call.then((data: any) => {
-
-            this.setState({sampleData: data});
-            console.log(this.state.sampleData);
         });
     }
 
@@ -124,16 +134,16 @@ class Main extends React.Component<MainProps, MainStates>
                     <form className="inputContainer" onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.search(e)}>
                         <div className="typeContainer">
                             <div className="inputTypeContainer">
-                                <CheckBoxInput label="Year Selection" values={["2014", "2015", "2016", "2017"]}></CheckBoxInput>
+                                <CheckBoxInput label="Year Selection" values={["2014", "2015", "2016", "2017"]} inputNames={["year_2014", "year_2015", "year_2016", "year_2017"]} func_handleFormInput={this.handleFormInput.bind(this)}></CheckBoxInput>
                             </div>
                             <div className="inputTypeContainer">
-                                <CheckBoxInput label="Type of Offense" values={["Commercial Sex Act", "Involuntary Servitude"]}></CheckBoxInput>
-                                <DropDownInput label="Area of Interest" values={["Region", "State"]}></DropDownInput>
+                                <CheckBoxInput label="Type of Offense" values={["Commercial Sex Act", "Involuntary Servitude"]} inputNames={["type1", "type2"]} func_handleFormInput={this.handleFormInput.bind(this)}></CheckBoxInput>
+                                <DropDownInput label="Area of Interest" values={["Region", "State"]} inputName={"area"} func_handleFormInput={this.handleFormInput.bind(this)}></DropDownInput>
                             </div>
                             <div className="inputTypeContainer">
-                                <TextInput label="Age Range" placeholder1="0" placeholder2="100"></TextInput>
-                                <TextInput label="Number of Occurances" placeholder1="0" placeholder2="100"></TextInput>
-                                <TextInput label="Number of Clearances" placeholder1="0" placeholder2="100"></TextInput>
+                                <TextInput label="Age Range" placeholder1="0" placeholder2="100" inputNames={["age1", "age2"]} func_handleFormInput={this.handleFormInput.bind(this)}></TextInput>
+                                <TextInput label="Number of Occurances" placeholder1="0" placeholder2="100" inputNames={["occurances1", "occurances2"]} func_handleFormInput={this.handleFormInput.bind(this)}></TextInput>
+                                <TextInput label="Number of Clearances" placeholder1="0" placeholder2="100" inputNames={["clearances1", "clearances2"]} func_handleFormInput={this.handleFormInput.bind(this)}></TextInput>
                             </div>
                         </div>
                         <div className="searchContainer">
