@@ -1,6 +1,7 @@
 import React from 'react';
 import LeafMap from './leafletMap/leafletMap';
 import Graph from './graph/graph';
+import Table from './table/table';
 import {DB_ROW} from './../main';
 import './view.css';
 
@@ -69,7 +70,7 @@ class View extends React.Component<ViewProps, ViewStates>
                     return (
 
                         <div className={this.props.data.status ? "tableContainer" : "hidden"}>
-                            <h1>Table</h1>
+                            <Table></Table>
                         </div>
                     );
         }
