@@ -24,7 +24,7 @@ class Main extends React.Component<MainProps, MainStates>
         
         var map_task: Task_Data = {status: true, name: "Map", close: false};
         var graph_task: Task_Data = {status: false, name: "Graph", close: true};
-        var table_task: Task_Data = {status: false, name: "Table name is realy", close: true};
+        var table_task: Task_Data = {status: false, name: "Table", close: true};
 
         var map_view: View_Data = {status: true, name: "map", type: "map"};
         var graph_view: View_Data = {status: false, name: "graph", type: "graph"};

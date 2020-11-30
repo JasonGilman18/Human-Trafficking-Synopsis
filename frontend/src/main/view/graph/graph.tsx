@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar, Line, Doughnut} from 'react-chartjs-2';
+import { Bar, Line, Pie, Doughnut} from 'react-chartjs-2';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './graph.css';
@@ -53,7 +53,7 @@ class Graph extends React.Component<GraphProps, GraphStates>
     {
         return (
             <div className="graph">
-                <Tabs>
+                <Tabs dir="rtl">
                     <TabList>
                         <Tab>Bar</Tab>
                         <Tab>Line</Tab>
@@ -94,6 +94,7 @@ class Graph extends React.Component<GraphProps, GraphStates>
                     </TabPanel>
                     <TabPanel>
                         <Doughnut
+                            
                             data={this.state.chartData}
                             options={{
                                 title:{
@@ -109,6 +110,7 @@ class Graph extends React.Component<GraphProps, GraphStates>
                         />
                     </TabPanel>
                 </Tabs>
+                {/* <h1>{this.props.sampleData}</h1> */}
             </div>
         );
     }
