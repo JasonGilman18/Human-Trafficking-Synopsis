@@ -27,3 +27,31 @@
 {
     margin: 0px !important;
 }
+
+.checkbox
+{
+    position: relative;
+    top: 4px;
+
+    height: 13px;
+    width: 13px;
+
+    -webkit-appearance: none;
+
+    border-radius: 3px;
+
+    background-color: #e7e9e2;
+
+    -webkit-box-shadow: inset 0 0 3px rgb(0, 0, .7);
+    box-shadow: inset 0 0 3px  rgb(0, 0, .7);
+}
+
+.checkbox:checked
+{
+    background-color: #7b8da3;
+}
+
+.checkbox:focus
+{
+    outline: none;
+}

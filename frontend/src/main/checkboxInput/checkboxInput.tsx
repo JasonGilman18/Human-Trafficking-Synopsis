@@ -22,8 +22,8 @@ class CheckBoxInput extends React.Component<checkboxInputProps, checkboxInputSta
                         this.props.values.map((value, index) => (
                             
                             <div className="inputLabelCombo">
-                                <input type="checkbox" name={"" + index} value={"" + value}></input>
-                                <label htmlFor={"" + value}>{value}</label>
+                                <input className="checkbox" type="checkbox" name={"" + index} value={"" + value}></input>
+                                <label className="checkboxLabel" htmlFor={"" + value}>{value}</label>
                             </div>
                         ))
                     }

@@ -17,7 +17,7 @@ class DropDownInput extends React.Component<DropDownInputProps, DropDownInputSta
 
             <div className="dropdownInputContainer">
                 <label className="dropdownInputLabel" htmlFor="dropdownInput">{this.props.label}</label>
-                <select name="dropdownInput">
+                <select className="dropdownInput" name="dropdownInput">
                     {
                         this.props.values.map((value) => (
                             
@@ -25,7 +25,7 @@ class DropDownInput extends React.Component<DropDownInputProps, DropDownInputSta
                         ))
                     }
                 </select>
-            </div>            
+            </div>          
         )
     }
 }
