@@ -1,0 +1,29 @@
+.checkboxInputContainer
+{
+    height: auto;
+    width: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    color: #484847;
+}
+
+.checkboxInputLabel
+{
+    margin: 0px 0px 5px 0px;
+    
+    font-weight: 600;
+}
+
+.inputLabelCombo
+{
+    margin: 0px 0px 5px 0px !important;
+}
+
+.itemLabelCombo:last-child
+{
+    margin: 0px !important;
+}

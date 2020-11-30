@@ -1,7 +1,7 @@
 .sliderInputContainer
 {
-    height: 60px;
-    width: 200px;
+    height: auto;
+    width: 165px;
 
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@
 .sliderInput
 {
     height: 25px;
-    width: 175px;
+    width: 115px;
 
     background-color: #7b8da3;
 

@@ -2,6 +2,8 @@ import React from 'react';
 import Header from './header/header';
 import TextInput from './textInput/textInput';
 import SliderInput from './sliderInput/sliderInput';
+import CheckBoxInput from './checkboxInput/checkboxInput';
+import DropDownInput from './dropdownInput/dropdownInput';
 import Task, {Task_Data} from './task/task';
 import View, {View_Data} from './view/view';
 import './main.css';
@@ -31,7 +33,7 @@ class Main extends React.Component<MainProps, MainStates>
         this.state = {tasks: [map_task, graph_task, table_task], views: [map_view, graph_view, table_view], sampleData: []};
 
         this.updateTask = this.updateTask.bind(this);
-        this.callDB = this.callDB.bind(this);
+        this.search = this.search.bind(this);
     }
 
     updateTask(event: React.MouseEvent<HTMLElement>, taskIndex: number, close: boolean)
@@ -74,6 +76,20 @@ class Main extends React.Component<MainProps, MainStates>
         this.setState({tasks: tempTasks, views: tempViews});
     }
 
+    search()
+    {
+        //capture inputs
+        //create query
+        //based on query then deal with returned data (create markers, rectangles etc)
+
+        //combo button for year
+        //combo box for type of offense
+        //dropdown for region or state level
+        //slider for age
+        //text input for for number of occurances
+        //text input for number of clearances
+    }
+
     async callDB(sql_command: string)
     {
         ipcRenderer.send('db', sql_command);
@@ -100,21 +116,28 @@ class Main extends React.Component<MainProps, MainStates>
             <div className="mainContainer">
                 <Header></Header>
                 <div className="middleContainer">
-                    <div className="inputContainer">
+                    <form className="inputContainer">
                         <div className="typeContainer">
                             <div className="inputTypeContainer">
-                                <TextInput label="input 1" placeholder="placeholder for input"></TextInput>
-                                <TextInput label="input 2" placeholder="placeholder for input"></TextInput>
+                                <CheckBoxInput label="Year Selection" values={["2014", "2015", "2016", "2017"]}></CheckBoxInput>
                             </div>
                             <div className="inputTypeContainer">
-                                <SliderInput label="input3" minVal="0" maxVal="100" step="1"></SliderInput>
-                                <SliderInput label="input4" minVal="0" maxVal="100" step="1"></SliderInput>
+                                <CheckBoxInput label="Type of Offense" values={["Commercial Sex Act", "Involuntary Servitude"]}></CheckBoxInput>
+                                <DropDownInput label="Area of Interest" values={["Region", "State"]}></DropDownInput>
+                            </div>
+                            <div className="inputTypeContainer">
+                                
+                            </div>
+                            <div className="inputTypeContainer">
+                                <TextInput label="Age Range" placeholder1="0" placeholder2="100"></TextInput>
+                                <TextInput label="Number of Occurances" placeholder1="0" placeholder2="100"></TextInput>
+                                <TextInput label="Number of Clearances" placeholder1="0" placeholder2="100"></TextInput>
                             </div>
                         </div>
                         <div className="searchContainer">
-                            <button className="searchBtn" onClick={() => this.callDB("SELECT * FROM human_offenses_clearance;")}>Search</button>
+                            <button className="searchBtn" onClick={() => this.search}>Search</button>
                         </div>
-                    </div>
+                    </form>
                     <div className="outputContainer">
                         <div className="taskbar">
                             {
