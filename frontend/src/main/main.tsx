@@ -163,7 +163,7 @@ class Main extends React.Component<MainProps, MainStates>
                             {
                                 this.state.views.map((view, index) => (
 
-                                    <View index={index} data={view}></View>
+                                    <View index={index} data={view} tableData_={this.state.sampleData}></View>
                                 ))
                             }
                         </div>

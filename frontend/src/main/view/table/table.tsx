@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './table.css';
 
 
-type TableViewProps = {};
-type TableViewStates = {columns: any, data: any};
+type TableViewProps = {tableData: any};
+type TableViewStates = {data: any};
 class TableView extends React.Component<TableViewProps, TableViewStates>
 {
     constructor(props: any)
@@ -13,64 +13,24 @@ class TableView extends React.Component<TableViewProps, TableViewStates>
         super(props);
 
         this.state = {
-            columns : [
-                {
-                    dataField: 'year',
-                    text: 'Year'
-                },{
-                    dataField: 'age',
-                    text: 'Age'
-                },{
-                    dataField: 'state',
-                    text: 'State'
-                },{
-                    dataField: 'region_description',
-                    text: 'Region'
-                }
-            ],
-            data: [
-                {
-                    "": "1",
-                    age: "adult",
-                    cleared: "3",
-                    clr_per_100k: "4.07030778310687",
-                    occ_per_100k: "14.9244618713918",
-                    occurrence: "11",
-                    offense: "commercial sex act",
-                    population: "737045",
-                    region: "9",
-                    region_description: "Southwest/Pacific",
-                    state: "Alaska",
-                    year: "2014",
-                    year_data: "0",
-                },
-                {
-                    "": "3",
-                    age: "adult",
-                    cleared: "0",
-                    clr_per_100k: "0",
-                    occ_per_100k: "0",
-                    occurrence: "0",
-                    offense: "commercial sex act",
-                    population: "38280824",
-                    region: "9",
-                    region_description: "Southwest/Pacific",
-                    state: "California",
-                    year: "2014",
-                    year_data: "0"
-                },
-            ]
+            data: this.props.tableData
         }
     }
 
+    toUpper(str: string){
+        return str[0].toUpperCase() + str.slice(1);
+    }
+
     renderData = (data: any, index: any) => {
+        console.log("TEST");
+        console.log(data);
+
         return(
             <tr key = {index}>
                 <td>{data.year}</td>
-                <td>{data.age}</td>
+                <td>{this.toUpper(data.age)}</td>
                 <td>{data.state}</td>
                 <td>{data.region_description}</td>
-
             </tr>
         )
     }
