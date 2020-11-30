@@ -33,6 +33,7 @@ class Main extends React.Component<MainProps, MainStates>
         this.state = {tasks: [map_task, graph_task, table_task], views: [map_view, graph_view, table_view], sampleData: []};
 
         this.updateTask = this.updateTask.bind(this);
+        this.callDB = this.callDB.bind(this);
         this.search = this.search.bind(this);
     }
 
@@ -76,8 +77,10 @@ class Main extends React.Component<MainProps, MainStates>
         this.setState({tasks: tempTasks, views: tempViews});
     }
 
-    search()
+    search(e: React.FormEvent<HTMLFormElement>)
     {
+        e.preventDefault();
+
         //capture inputs
         //create query
         //based on query then deal with returned data (create markers, rectangles etc)
@@ -88,6 +91,8 @@ class Main extends React.Component<MainProps, MainStates>
         //slider for age
         //text input for for number of occurances
         //text input for number of clearances
+
+        this.callDB("SELECT * FROM human_offenses_clearance;");
     }
 
     async callDB(sql_command: string)
@@ -116,7 +121,7 @@ class Main extends React.Component<MainProps, MainStates>
             <div className="mainContainer">
                 <Header></Header>
                 <div className="middleContainer">
-                    <form className="inputContainer">
+                    <form className="inputContainer" onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.search(e)}>
                         <div className="typeContainer">
                             <div className="inputTypeContainer">
                                 <CheckBoxInput label="Year Selection" values={["2014", "2015", "2016", "2017"]}></CheckBoxInput>
@@ -132,7 +137,7 @@ class Main extends React.Component<MainProps, MainStates>
                             </div>
                         </div>
                         <div className="searchContainer">
-                            <button className="searchBtn" onClick={() => this.search}>Search</button>
+                            <button className="searchBtn" type="submit">Search</button>
                         </div>
                     </form>
                     <div className="outputContainer">
