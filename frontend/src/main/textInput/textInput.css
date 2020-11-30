@@ -1,25 +1,36 @@
 .textInputContainer
 {
-    height: 60px;
-    width: 200px;
+    height: auto;
+    width: auto;
+
+    margin-top: 5.5px;
 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: flex-start;
     align-items: flex-start;
 
     color: #484847;
 }
 
+.textInputContainer:first-child
+{
+    margin: 0px !important;
+}
+
 .textInputLabel
 {
-    margin: 0px 0px 5px 0px;
+    width: 170px;
+    margin: 0px 10px 5px 0px;
     
     font-weight: 600;
 }
 
 .textInput
 {
+    height: 15px;
+    width: 40px;
+
     padding: 5px 5px 5px 5px;
 
     border: 1.5px solid #484847;
@@ -37,4 +48,16 @@
 .textInput:focus
 {
     outline: none;
+}
+
+.centerToLabel
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toLabel
+{
+    margin: 0px 5px 0px 5px;
 }

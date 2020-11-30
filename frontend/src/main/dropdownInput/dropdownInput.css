@@ -1,0 +1,19 @@
+.dropdownInputContainer
+{
+    height: auto;
+    width: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    color: #484847;
+}
+
+.dropdownInputLabel
+{
+    margin: 0px 0px 5px 0px;
+    
+    font-weight: 600;
+}
