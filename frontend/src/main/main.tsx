@@ -126,9 +126,6 @@ class Main extends React.Component<MainProps, MainStates>
                                 <DropDownInput label="Area of Interest" values={["Region", "State"]}></DropDownInput>
                             </div>
                             <div className="inputTypeContainer">
-                                
-                            </div>
-                            <div className="inputTypeContainer">
                                 <TextInput label="Age Range" placeholder1="0" placeholder2="100"></TextInput>
                                 <TextInput label="Number of Occurances" placeholder1="0" placeholder2="100"></TextInput>
                                 <TextInput label="Number of Clearances" placeholder1="0" placeholder2="100"></TextInput>
