@@ -1,18 +1,25 @@
 import React from 'react';
-import { Bar, Doughnut } from 'react-chartjs-2';
-import { Rectangle } from 'react-leaflet';
+import { Bar, Line, Doughnut} from 'react-chartjs-2';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import './graph.css';
 
-
 type GraphProps = {};
-type GraphStates = {chartData: any};
+type GraphStates = {defaultProps: any, chartData: any};
 class Graph extends React.Component<GraphProps, GraphStates>
 {
     constructor(props: any)
     {
         super(props);
-
+        
         this.state = {
+            defaultProps: {
+                displayTitle:true,
+                displayLegend:true,
+                legendPosition:'right',
+                location:'City',
+                chartTitle:'Largest Cities In '
+            },
             chartData: {
                 labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
                 datasets:[
@@ -41,11 +48,67 @@ class Graph extends React.Component<GraphProps, GraphStates>
         }
     }
 
+
     render()
     {
         return (
-            <div className="chart">
-                <Bar data={this.state.chartData}></Bar>
+            <div className="graph">
+                <Tabs>
+                    <TabList>
+                        <Tab>Bar</Tab>
+                        <Tab>Line</Tab>
+                        <Tab>Donut</Tab>
+                    </TabList>
+                
+                    <TabPanel>
+                        <Bar
+                            data={this.state.chartData}
+                            options={{
+                                title:{
+                                display:this.state.defaultProps.displayTitle,
+                                text:this.state.defaultProps.chartTitle+this.state.defaultProps.location,
+                                fontSize:25
+                                },
+                                legend:{
+                                display:false,
+                                position:this.state.defaultProps.legendPosition
+                                }
+                            }}
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                        <Line
+                            data={this.state.chartData}
+                            options={{
+                                title:{
+                                display:this.state.defaultProps.displayTitle,
+                                text:'Largest Cities In '+this.state.defaultProps.location,
+                                fontSize:25
+                                },
+                                legend:{
+                                display:this.state.defaultProps.displayLegend,
+                                position:this.state.defaultProps.legendPosition
+                                }
+                            }}
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                        <Doughnut
+                            data={this.state.chartData}
+                            options={{
+                                title:{
+                                display:this.state.defaultProps.displayTitle,
+                                text:'Largest Cities In '+this.state.defaultProps.location,
+                                fontSize:25
+                                },
+                                legend:{
+                                display:this.state.defaultProps.displayLegend,
+                                position:this.state.defaultProps.legendPosition
+                                }
+                            }}
+                        />
+                    </TabPanel>
+                </Tabs>
             </div>
         );
     }
