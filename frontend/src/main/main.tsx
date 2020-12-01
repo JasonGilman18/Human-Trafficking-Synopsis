@@ -30,6 +30,7 @@ class Main extends React.Component<MainProps, MainStates>
         this.state = {tasks: [map_task], views: [map_view], inputData: temp_input_data, sampleData: []};
 
         this.updateTask = this.updateTask.bind(this);
+        this.openNewTasks = this.openNewTasks.bind(this);
         this.handleFormInput = this.handleFormInput.bind(this);
         this.callDB = this.callDB.bind(this);
         this.search = this.search.bind(this);
@@ -75,6 +76,29 @@ class Main extends React.Component<MainProps, MainStates>
         this.setState({tasks: tempTasks, views: tempViews});
     }
 
+    openNewTasks(data: Array<DB_ROW>)
+    {
+        var temp_views = this.state.views;
+        temp_views[0].data = data;
+        temp_views[0].status = true;
+        for(var i=1; i<temp_views.length;i++)
+            temp_views[i].status = false;
+        var new_graph_view: View_Data = {status: false, name: "graph", type: "graph", data: data};
+        var new_table_view: View_Data = {status: false, name: "table", type: "table", data: data};
+        temp_views.push(new_graph_view, new_table_view);
+
+        var temp_tasks = this.state.tasks;
+        temp_tasks[0].status = true;
+        for(var i=1; i<temp_tasks.length;i++)
+            temp_tasks[i].status = false;
+        var new_graph_task: Task_Data = {status: false, name: "Graph", close: true};
+        var new_table_task: Task_Data = {status: false, name: "Table", close: true};
+        temp_tasks.push(new_graph_task, new_table_task);
+        
+        this.setState({tasks: temp_tasks, views: temp_views, sampleData: data});
+        console.log(this.state.sampleData);
+    }
+
     handleFormInput(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, input: string)
     {
         var temp_input_data: Map<string, string> = this.state.inputData;
@@ -97,20 +121,7 @@ class Main extends React.Component<MainProps, MainStates>
             //based on query then deal with returned data (create markers, rectangles etc)
             //call functions to create map, graph, table
             
-            var temp_views = this.state.views;
-            temp_views[0].data = data; 
-            var new_graph_view: View_Data = {status: false, name: "graph", type: "graph", data: data};
-            var new_table_view: View_Data = {status: false, name: "table", type: "table", data: data};
-            temp_views.push(new_graph_view, new_table_view);
-
-            var temp_tasks = this.state.tasks;
-            temp_tasks[0].status = true;
-            var new_graph_task: Task_Data = {status: false, name: "Graph", close: true};
-            var new_table_task: Task_Data = {status: false, name: "Table", close: true};
-            temp_tasks.push(new_graph_task, new_table_task);
-            
-            this.setState({tasks: temp_tasks, views: temp_views, sampleData: data});
-            console.log(this.state.sampleData);
+            this.openNewTasks(data);
         });
     }
 
