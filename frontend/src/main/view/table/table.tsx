@@ -42,10 +42,10 @@ class TableView extends React.Component<TableViewProps, TableViewStates>
                 <div className="tableFixHead">
                 <Table striped bordered hover>
                     <thead>
-                        <tr>
+                        <tr className="position-sticky">
                             <th>Year</th>
                             <th>Age</th>
-                            <th>Occurrence</th>
+                            <th>Occurrences</th>
                             <th>Cleared</th>
                             <th>State</th>
                             <th>Region</th>
@@ -54,8 +54,7 @@ class TableView extends React.Component<TableViewProps, TableViewStates>
                     <tbody>
                         {this.state.data.map(this.renderData)}
                     </tbody>
-                </Table>
-                </div>
+                </Table></div>
             </div>
         );
     }
