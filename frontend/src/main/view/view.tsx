@@ -1,12 +1,12 @@
 import React from 'react';
 import LeafMap from './leafletMap/leafletMap';
-import Graph from './graph/graph';
+import GraphView from './graph/graph';
 import TableView from './table/table';
 import {DB_ROW} from './../main';
 import './view.css';
 
 
-interface View_Data {status: boolean, name: string, type: string, data: Array<DB_ROW>};
+interface View_Data {status: boolean, name: string, type: string, inputData: Map<string, string>, data: Array<DB_ROW>};
 
 type ViewProps = {index: number, data: View_Data};
 type ViewStates = {};
@@ -35,7 +35,7 @@ class View extends React.Component<ViewProps, ViewStates>
                     return (
 
                         <div className={this.props.data.status ? "graphContainer" : "hidden"}>
-                            <Graph></Graph>
+                            <GraphView data={this.props.data.data} area={this.props.data.inputData.get("area")}></GraphView>
                         </div>
                     );
 
