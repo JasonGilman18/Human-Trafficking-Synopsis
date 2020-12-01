@@ -65,7 +65,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
                     topState.push(data[i].state);
                     topCount.push(parseInt(this.normalizeNumber(data[i].occurence)));
                 }else{
-                    topCount[statePos]+=parseInt(this.normalizeNumber(data[i].occurrence));
+                    topCount[statePos] += parseInt(this.normalizeNumber(data[i].occurrence));
                 }
             }
         else
@@ -75,7 +75,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
                     topState.push(data[i].region_description);
                     topCount.push(parseInt(this.normalizeNumber(data[i].occurence)));
                 }else{
-                    topCount[statePos]+=parseInt(this.normalizeNumber(data[i].occurrence));
+                    topCount[statePos] += parseInt(this.normalizeNumber(data[i].occurrence));
                 }
             }
 
