@@ -1,6 +1,6 @@
 import React from 'react';
 import LeafMap from './leafletMap/leafletMap';
-import Graph from './graph/graph';
+import GraphView from './graph/graph';
 import TableView from './table/table';
 import {DB_ROW} from './../main';
 import './view.css';
@@ -61,7 +61,7 @@ class View extends React.Component<ViewProps, ViewStates>
                     return (
 
                         <div className={this.props.data.status ? "graphContainer" : "hidden"}>
-                            <Graph></Graph>
+                            <GraphView data={this.props.data.data}></GraphView>
                         </div>
                     );
 
