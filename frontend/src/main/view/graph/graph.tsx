@@ -11,9 +11,8 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
     constructor(props: any)
     {
         super(props);
-        
-        let isRegion = true;
-        //WILL CHANGE TO THIS.PROPS.ISREGION WHEN IMPLEMENTED
+        console.log(this.props.area);
+        let isRegion = "region" == this.props.area;
 
         let cLocation: string;
         if(isRegion)
