@@ -15,7 +15,7 @@ interface DB_ROW {index: string, year: string, region_index: string, region: str
 
 
 type MainProps = {};
-type MainStates = {tasks: Array<Task_Data>, views: Array<View_Data>, inputData: Map<string, string>, sampleData: Array<DB_ROW>};
+type MainStates = {tasks: Array<Task_Data>, views: Array<View_Data>, inputData: Map<string, string>};
 class Main extends React.Component<MainProps, MainStates>
 {
     constructor(props: any)
@@ -27,7 +27,7 @@ class Main extends React.Component<MainProps, MainStates>
 
         var temp_input_data: Map<string, string> = new Map([["year_2014", ""], ["year_2015", ""], ["year_2016", ""], ["year_2017", ""], ["type1", ""], ["type2", ""], ["area", "region"], ["age1", "0"], ["age2", "100"], ["occurances1", "0"], ["occurances2", "100"], ["clearances1", "0"], ["clearances2", "100"]]);
 
-        this.state = {tasks: [map_task], views: [map_view], inputData: temp_input_data, sampleData: []};
+        this.state = {tasks: [map_task], views: [map_view], inputData: temp_input_data};
 
         this.updateTask = this.updateTask.bind(this);
         this.openNewTasks = this.openNewTasks.bind(this);
@@ -70,7 +70,6 @@ class Main extends React.Component<MainProps, MainStates>
                     tempViews[i].status = false;
                 }  
             }
-            console.log(tempTasks)
         }
         
         this.setState({tasks: tempTasks, views: tempViews});
@@ -95,8 +94,7 @@ class Main extends React.Component<MainProps, MainStates>
         var new_table_task: Task_Data = {status: false, name: "Table", close: true};
         temp_tasks.push(new_graph_task, new_table_task);
         
-        this.setState({tasks: temp_tasks, views: temp_views, sampleData: data});
-        console.log(this.state.sampleData);
+        this.setState({tasks: temp_tasks, views: temp_views});
     }
 
     handleFormInput(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, input: string)
