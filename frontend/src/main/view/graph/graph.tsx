@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar, Line, Pie, Doughnut} from 'react-chartjs-2';
+import { Bar, Line, Doughnut} from 'react-chartjs-2';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './graph.css';
@@ -20,6 +20,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
             cLocation = "Region"
         else
             cLocation = "State"
+
         let [cName, cData] = this.sortByOccurrence(isRegion);
 
         this.state = {
@@ -123,7 +124,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
     {
         return (
             <div className="graph">
-                <Tabs dir="ltr">
+                <Tabs>
                     <TabList>
                         <Tab>Bar</Tab>
                         <Tab>Line</Tab>
