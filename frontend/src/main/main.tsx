@@ -113,11 +113,6 @@ class Main extends React.Component<MainProps, MainStates>
         //call db with query
         const sql_command = this.createQuery(this.state.inputData);
         this.callDB(sql_command).then((data: any) => {
-
-            //open table and graph view. update map view
-            //add tasks for table and graph
-            //based on query then deal with returned data (create markers, rectangles etc)
-            //call functions to create map, graph, table
             
             this.openNewTasks(data);
         });
