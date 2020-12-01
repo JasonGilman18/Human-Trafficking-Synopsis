@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar, Line, Pie, Doughnut} from 'react-chartjs-2';
+import { Bar, Line, Doughnut} from 'react-chartjs-2';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './graph.css';
@@ -11,15 +11,15 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
     constructor(props: any)
     {
         super(props);
-        
-        let isRegion = true;
-        //WILL CHANGE TO THIS.PROPS.ISREGION WHEN IMPLEMENTED
+        console.log(this.props.area);
+        let isRegion = "region" == this.props.area;
 
         let cLocation: string;
         if(isRegion)
             cLocation = "Region"
         else
             cLocation = "State"
+
         let [cName, cData] = this.sortByOccurrence(isRegion);
 
         this.state = {
@@ -64,7 +64,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
                     topState.push(data[i].state);
                     topCount.push(parseInt(this.normalizeNumber(data[i].occurence)));
                 }else{
-                    topCount[statePos]+=parseInt(this.normalizeNumber(data[i].occurrence));
+                    topCount[statePos] += parseInt(this.normalizeNumber(data[i].occurrence));
                 }
             }
         else
@@ -74,7 +74,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
                     topState.push(data[i].region_description);
                     topCount.push(parseInt(this.normalizeNumber(data[i].occurence)));
                 }else{
-                    topCount[statePos]+=parseInt(this.normalizeNumber(data[i].occurrence));
+                    topCount[statePos] += parseInt(this.normalizeNumber(data[i].occurrence));
                 }
             }
 
@@ -123,7 +123,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
     {
         return (
             <div className="graph">
-                <Tabs dir="ltr">
+                <Tabs>
                     <TabList>
                         <Tab>Bar</Tab>
                         <Tab>Line</Tab>
