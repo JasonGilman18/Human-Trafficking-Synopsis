@@ -22,15 +22,15 @@ class TableView extends React.Component<TableViewProps, TableViewStates>
     }
 
     renderData = (data: any, index: any) => {
-        console.log("TEST");
-        console.log(data);
-
         return(
             <tr key = {index}>
                 <td>{data.year}</td>
                 <td>{this.toUpper(data.age)}</td>
+                <td>{data.occurrence}</td>
+                <td>{data.cleared}</td>
                 <td>{data.state}</td>
                 <td>{data.region_description}</td>
+                
             </tr>
         )
     }
@@ -44,6 +44,8 @@ class TableView extends React.Component<TableViewProps, TableViewStates>
                         <tr>
                             <th>Year</th>
                             <th>Age</th>
+                            <th>Occurrence</th>
+                            <th>Cleared</th>
                             <th>State</th>
                             <th>Region</th>
                         </tr>
