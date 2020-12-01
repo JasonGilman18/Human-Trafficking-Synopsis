@@ -21,6 +21,9 @@
 .inputLabelCombo
 {
     margin: 0px 0px 5px 0px !important;
+
+    display: flex;
+    align-items: center;
 }
 
 .itemLabelCombo:last-child
@@ -30,11 +33,10 @@
 
 .checkbox
 {
-    position: relative;
-    top: 4px;
-
     height: 13px;
     width: 13px;
+
+    margin-right: 5px;
 
     -webkit-appearance: none;
 
@@ -44,6 +46,11 @@
 
     -webkit-box-shadow: inset 0 0 3px rgb(0, 0, .7);
     box-shadow: inset 0 0 3px  rgb(0, 0, .7);
+}
+
+.checkboxLabel
+{
+    margin: 0px;
 }
 
 .checkbox:checked
