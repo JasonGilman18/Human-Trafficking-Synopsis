@@ -21,11 +21,11 @@ class Main extends React.Component<MainProps, MainStates>
     constructor(props: any)
     {
         super(props);
-        
-        var map_task: Task_Data = {status: true, name: "Map", close: false};
-        var map_view: View_Data = {status: true, name: "map", type: "map", data: []};
 
         var temp_input_data: Map<string, string> = new Map([["year_2014", ""], ["year_2015", ""], ["year_2016", ""], ["year_2017", ""], ["type1", ""], ["type2", ""], ["area", "region"], ["age1", "0"], ["age2", "100"], ["occurances1", "0"], ["occurances2", "100"], ["clearances1", "0"], ["clearances2", "100"]]);
+
+        var map_task: Task_Data = {status: true, name: "Map", close: false};
+        var map_view: View_Data = {status: true, name: "map", type: "map", inputData: temp_input_data, data: []};
 
         this.state = {tasks: [map_task], views: [map_view], inputData: temp_input_data};
 
@@ -75,15 +75,16 @@ class Main extends React.Component<MainProps, MainStates>
         this.setState({tasks: tempTasks, views: tempViews});
     }
 
-    openNewTasks(data: Array<DB_ROW>)
+    openNewTasks(data: Array<DB_ROW>, inputData: Map<string, string>)
     {
         var temp_views = this.state.views;
         temp_views[0].data = data;
         temp_views[0].status = true;
+        temp_views[0].inputData = inputData;
         for(var i=1; i<temp_views.length;i++)
             temp_views[i].status = false;
-        var new_graph_view: View_Data = {status: false, name: "graph", type: "graph", data: data};
-        var new_table_view: View_Data = {status: false, name: "table", type: "table", data: data};
+        var new_graph_view: View_Data = {status: false, name: "graph", type: "graph", inputData: inputData, data: data};
+        var new_table_view: View_Data = {status: false, name: "table", type: "table", inputData: inputData, data: data};
         temp_views.push(new_graph_view, new_table_view);
 
         var temp_tasks = this.state.tasks;
@@ -111,7 +112,8 @@ class Main extends React.Component<MainProps, MainStates>
         //capture inputs
         //create query
         //call db with query
-        const sql_command = this.createQuery(this.state.inputData);
+        const inputData = this.state.inputData;
+        const sql_command = this.createQuery(inputData);
         this.callDB(sql_command).then((data: any) => {
 
             //open table and graph view. update map view
@@ -119,7 +121,7 @@ class Main extends React.Component<MainProps, MainStates>
             //based on query then deal with returned data (create markers, rectangles etc)
             //call functions to create map, graph, table
             
-            this.openNewTasks(data);
+            this.openNewTasks(data, inputData);
         });
     }
 

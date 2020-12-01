@@ -4,7 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './graph.css';
 
-type GraphProps = {};
+type GraphProps = {area: string | undefined};
 type GraphStates = {defaultProps: any, chartData: any};
 class Graph extends React.Component<GraphProps, GraphStates>
 {
