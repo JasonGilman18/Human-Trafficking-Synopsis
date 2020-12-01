@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './table.css';
 
 
-type TableViewProps = {tableData: any};
+type TableViewProps = {data: any};
 type TableViewStates = {data: any};
 class TableView extends React.Component<TableViewProps, TableViewStates>
 {
@@ -13,7 +13,7 @@ class TableView extends React.Component<TableViewProps, TableViewStates>
         super(props);
 
         this.state = {
-            data: this.props.tableData
+            data: this.props.data
         }
     }
 

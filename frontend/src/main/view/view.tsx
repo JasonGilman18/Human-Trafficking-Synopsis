@@ -6,9 +6,9 @@ import {DB_ROW} from './../main';
 import './view.css';
 
 
-interface View_Data {status: boolean, name: string, type: string};
+interface View_Data {status: boolean, name: string, type: string, data: Array<DB_ROW>};
 
-type ViewProps = {index: number, data: View_Data, tableData_: any};
+type ViewProps = {index: number, data: View_Data};
 type ViewStates = {};
 class View extends React.Component<ViewProps, ViewStates>
 {
@@ -70,7 +70,7 @@ class View extends React.Component<ViewProps, ViewStates>
                     return (
 
                         <div className={this.props.data.status ? "tableContainer" : "hidden"}>
-                            <TableView tableData={this.props.tableData_}></TableView>
+                            <TableView data={this.props.data.data}></TableView>
                         </div>
                     );
         }
