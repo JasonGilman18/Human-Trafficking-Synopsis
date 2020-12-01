@@ -53,7 +53,7 @@ class Graph extends React.Component<GraphProps, GraphStates>
     {
         return (
             <div className="graph">
-                <Tabs dir="rtl">
+                <Tabs>
                     <TabList>
                         <Tab>Bar</Tab>
                         <Tab>Line</Tab>
@@ -110,7 +110,6 @@ class Graph extends React.Component<GraphProps, GraphStates>
                         />
                     </TabPanel>
                 </Tabs>
-                {/* <h1>{this.props.sampleData}</h1> */}
             </div>
         );
     }

@@ -1,12 +1,12 @@
 import React from 'react';
 import LeafMap from './leafletMap/leafletMap';
 import Graph from './graph/graph';
-import Table from './table/table';
+import TableView from './table/table';
 import {DB_ROW} from './../main';
 import './view.css';
 
 
-interface View_Data {status: boolean, name: string, type: string};
+interface View_Data {status: boolean, name: string, type: string, data: Array<DB_ROW>};
 
 type ViewProps = {index: number, data: View_Data};
 type ViewStates = {};
@@ -70,7 +70,7 @@ class View extends React.Component<ViewProps, ViewStates>
                     return (
 
                         <div className={this.props.data.status ? "tableContainer" : "hidden"}>
-                            <Table></Table>
+                            <TableView data={this.props.data.data}></TableView>
                         </div>
                     );
         }
