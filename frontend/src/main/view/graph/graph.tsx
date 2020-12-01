@@ -4,7 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './graph.css';
 
-type GraphViewProps = {data: any};
+type GraphViewProps = {data: any, area: string | undefined};
 type GraphViewStates = {defaultProps: any, chartData: any};
 class GraphView extends React.Component<GraphViewProps, GraphViewStates>
 {

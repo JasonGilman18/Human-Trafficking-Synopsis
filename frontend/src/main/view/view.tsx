@@ -35,7 +35,7 @@ class View extends React.Component<ViewProps, ViewStates>
                     return (
 
                         <div className={this.props.data.status ? "graphContainer" : "hidden"}>
-                            <GraphView data={this.props.data.data}></GraphView>
+                            <GraphView data={this.props.data.data} area={this.props.data.inputData.get("area")}></GraphView>
                         </div>
                     );
 
