@@ -6,7 +6,7 @@ import {DB_ROW} from './../main';
 import './view.css';
 
 
-interface View_Data {status: boolean, name: string, type: string, data: Array<DB_ROW>};
+interface View_Data {status: boolean, name: string, type: string, inputData: Map<string, string>, data: Array<DB_ROW>};
 
 type ViewProps = {index: number, data: View_Data};
 type ViewStates = {};
@@ -16,32 +16,6 @@ class View extends React.Component<ViewProps, ViewStates>
     {
         super(props);
     }
-
-    /*
-    componentDidMount()
-    {
-        var regions = new Map<string, number>();
-
-        const db_call = this.props.func_callDB("SELECT * FROM human_offenses_clearance;");
-        db_call.then((data) => {
-
-            for(var row of data)
-            {
-                var current_occurences = regions.get(row.region);
-
-                if(current_occurences)
-                    regions.set(row.region, current_occurences + parseInt(row.occurrence));
-                else
-                    regions.set(row.region, parseInt(row.occurrence));
-            }
-
-            //in another function
-            //figure out how to size the hotspots based on the number in Map
-            //create hotspots and add them to state
-            //in HTML add hotspots
-        });
-    }
-    */
 
     render()
     {
