@@ -39,6 +39,7 @@ class TableView extends React.Component<TableViewProps, TableViewStates>
     {
         return (
             <div className="table">
+                <div className="tableFixHead">
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -54,6 +55,7 @@ class TableView extends React.Component<TableViewProps, TableViewStates>
                         {this.state.data.map(this.renderData)}
                     </tbody>
                 </Table>
+                </div>
             </div>
         );
     }
