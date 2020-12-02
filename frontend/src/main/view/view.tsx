@@ -19,18 +19,19 @@ class View extends React.Component<ViewProps, ViewStates>
 
     render()
     {
-        switch(this.props.data.type)
+        if(this.props.data.status)
         {
-            case("map"):
+            switch(this.props.data.type)
+            {
+                case("map"):
 
-                return (
+                    return (
+                        <div className="mapContainer">
+                            <LeafMap data={this.props.data.data} area={this.props.data.inputData.get("area")}></LeafMap>
+                        </div>
+                    );
 
-                    <div className={this.props.data.status ? "mapContainer" : "hidden"}>
-                        <LeafMap data={this.props.data.data} area={this.props.data.inputData.get("area")}></LeafMap>
-                    </div>
-                );
-
-            case("graph"):
+                case("graph"):
 
                     return (
 
@@ -39,7 +40,7 @@ class View extends React.Component<ViewProps, ViewStates>
                         </div>
                     );
 
-            case("table"):
+                case("table"):
                     
                     return (
 
@@ -47,7 +48,10 @@ class View extends React.Component<ViewProps, ViewStates>
                             <TableView data={this.props.data.data}></TableView>
                         </div>
                     );
+            }   
         }
+        else
+            return null;
     }
 }
 

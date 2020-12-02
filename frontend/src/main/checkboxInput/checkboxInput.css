@@ -3,6 +3,8 @@
     height: auto;
     width: auto;
 
+    margin: 0px !important;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
