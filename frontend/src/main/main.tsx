@@ -11,7 +11,7 @@ import './main.css';
 const {ipcRenderer} = window.require('electron');
 
 
-interface DB_ROW {index: string, year: string, region_index: string, region: string, state: string, offense: string, occurrence: string, age: string, cleared: string, population: string, occ_per_100k: string, clr_per_100k: string};
+interface DB_ROW {year: string, region: string, region_description: string, state: string, offense: string, occurrence: string, age: string, cleared: string, population: string, occ_per_100k: string, clr_per_100k: string};
 
 
 type MainProps = {};
@@ -24,10 +24,9 @@ class Main extends React.Component<MainProps, MainStates>
 
         var temp_input_data: Map<string, string> = new Map([["year_2014", ""], ["year_2015", ""], ["year_2016", ""], ["year_2017", ""], ["type1", ""], ["type2", ""], ["area", "region"], ["age1", "0"], ["age2", "100"], ["occurances1", "0"], ["occurances2", "100"], ["clearances1", "0"], ["clearances2", "100"]]);
 
-        var map_task: Task_Data = {status: true, name: "Map", close: false};
-        var map_view: View_Data = {status: true, name: "map", type: "map", inputData: temp_input_data, data: []};
+        
 
-        this.state = {tasks: [map_task], views: [map_view], inputData: temp_input_data};
+        this.state = {tasks: [], views: [], inputData: temp_input_data};
 
         this.updateTask = this.updateTask.bind(this);
         this.openNewTasks = this.openNewTasks.bind(this);
@@ -78,22 +77,20 @@ class Main extends React.Component<MainProps, MainStates>
     openNewTasks(data: Array<DB_ROW>, inputData: Map<string, string>)
     {
         var temp_views = this.state.views;
-        temp_views[0].data = data;
-        temp_views[0].status = true;
-        temp_views[0].inputData = inputData;
-        for(var i=1; i<temp_views.length;i++)
+        for(var i=0; i<temp_views.length;i++)
             temp_views[i].status = false;
         var new_graph_view: View_Data = {status: false, name: "graph", type: "graph", inputData: inputData, data: data};
         var new_table_view: View_Data = {status: false, name: "table", type: "table", inputData: inputData, data: data};
-        temp_views.push(new_graph_view, new_table_view);
+        var new_map_view: View_Data = {status: true, name: "map", type: "map", inputData: inputData, data: data};
+        temp_views.push(new_map_view, new_graph_view, new_table_view);
 
         var temp_tasks = this.state.tasks;
-        temp_tasks[0].status = true;
-        for(var i=1; i<temp_tasks.length;i++)
+        for(var i=0; i<temp_tasks.length;i++)
             temp_tasks[i].status = false;
         var new_graph_task: Task_Data = {status: false, name: "Graph", close: true};
         var new_table_task: Task_Data = {status: false, name: "Table", close: true};
-        temp_tasks.push(new_graph_task, new_table_task);
+        var new_map_task: Task_Data = {status: true, name: "Map", close: true};
+        temp_tasks.push(new_map_task, new_graph_task, new_table_task);
         
         this.setState({tasks: temp_tasks, views: temp_views});
     }

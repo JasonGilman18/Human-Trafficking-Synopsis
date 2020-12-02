@@ -26,7 +26,7 @@ class View extends React.Component<ViewProps, ViewStates>
                 return (
 
                     <div className={this.props.data.status ? "mapContainer" : "hidden"}>
-                        <LeafMap data={this.props.data.data}></LeafMap>
+                        <LeafMap data={this.props.data.data} area={this.props.data.inputData.get("area")}></LeafMap>
                     </div>
                 );
 

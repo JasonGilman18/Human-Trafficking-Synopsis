@@ -26,9 +26,9 @@
     opacity: 1;
 }
 
-.taskContainer.Map
+.taskContainer:first-child
 {
-    margin: 0px 3px 0px 5px;
+    margin-left: 5px;
 }
 
 .standardizeWidth
@@ -37,11 +37,6 @@
     min-width: 55px;
 
     margin: 0px 20px 0px 0px;
-}
-
-.standardizeWidth.Map
-{
-    margin: 0px 42px 0px 0px;
 }
 
 .taskLabel
