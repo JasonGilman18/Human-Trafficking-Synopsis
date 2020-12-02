@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import Leaflet, { divIcon, LeafletMouseEvent } from 'leaflet';
+import Leaflet, { divIcon, LeafletEvent, Layer, geoJSON, layerGroup } from 'leaflet';
 import { TileLayer, Map as LeafletMap, GeoJSON } from 'react-leaflet';
 import {DB_ROW} from './../../main';
 import 'leaflet/dist/leaflet.css';
@@ -8,11 +8,12 @@ import './leafletMap.css';
 import pinIcon from './icons/pin.png';
 import {statesData} from './us-states';
 import {regionsData} from './us-regions';
-import { GeoJSON as geojson } from 'geojson';
+import { Feature, GeoJSON as geojson } from 'geojson';
+import Legend from './legend';
 
 
 type LeafMapProps = {data: Array<DB_ROW>, area: string | undefined};
-type LeafMapStates = {mapCenter: Leaflet.LatLng, area: string | undefined, data: Array<DB_ROW>, hotspots: Array<geojson>};
+type LeafMapStates = {mapCenter: Leaflet.LatLng, area: string | undefined, data: Array<DB_ROW>, hotspots: Array<Feature>};
 class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
 {
     constructor(props: any) {
@@ -43,7 +44,6 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
     createHotspots(data: Array<DB_ROW>)
     {
         var occurances = new Map<string, number>();
-        var s = new Map<string, Map<string, number>>();
         const area = this.props.area;
         data.forEach((row) => {
 
@@ -63,24 +63,8 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
                     occurances.set(row.region_description, temp_num_occurances + parseInt(row.occurrence));
                 else
                     occurances.set(row.region_description, parseInt(row.occurrence));
-
-                var temp = s.get(row.region_description);
-
-                if(temp != undefined)
-                {
-                    temp.set(row.state, 1);
-                    s.set(row.region_description, temp);
-                }
-                else
-                {
-                    var t = new Map<string, number>();
-                    t.set(row.state, 1);
-                    s.set(row.region_description, t);
-                }
             }
         });
-
-        console.log(s);
 
         var hotspots;
         if(area == "State")
@@ -92,7 +76,7 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
         this.setState({hotspots: hotspots});
     }
 
-    handleStates(occurances: Map<string, number>): Array<geojson>
+    handleStates(occurances: Map<string, number>): Array<Feature>
     {
         var states = statesData;
         states.forEach((state) => {
@@ -112,7 +96,7 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
                 weight: 2,
                 opacity: 1,
                 color: 'white',
-                dashArray: '0',
+                dashArray: '3',
                 fillOpacity: .7
             };
             state.properties.style = style;
@@ -121,34 +105,28 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
         return states;
     }
 
-    handleRegions(occurances: Map<string, number>): Array<geojson>
+    handleRegions(occurances: Map<string, number>): Array<Feature>
     {
-        var states = statesData;
+        var regions = regionsData;
 
-        states.forEach((state) => {
+        regions.forEach((region) => {
 
-            var stateName = state.properties.name;
-            var num_occurances;
-            if(regionsData[stateName] != undefined)
-                num_occurances = occurances.get(regionsData[stateName])!;
-            else
-                num_occurances = 0;
-
-            state.properties.occurances = num_occurances;
-
+            var num_occurances = occurances.get(region.properties.name)!;
+            region.properties.occurances = num_occurances;
+            
             var style = {
 
                 fillColor: this.getColor(num_occurances),
                 weight: 2,
                 opacity: 1,
                 color: this.getColor(num_occurances),
-                dashArray: '0',
+                dashArray: '3',
                 fillOpacity: .7
             };
-            state.properties.style = style;
+            region.properties.style = style;
         });
 
-        return states;
+        return regions;
     }
 
     getColor(num_occurances: number)
@@ -156,7 +134,7 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
         if(num_occurances != undefined)
         {
             if(num_occurances <= 25)
-                return '#FFEDA0';
+                return '#ffec99';
             else if(num_occurances <= 50)
                 return '#FED976';
             else if(num_occurances <= 100)
@@ -174,6 +152,46 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
         }
     }
 
+    handleInteraction(feature: Feature, layer: Layer)
+    {
+        layer.on({
+            mouseover: this.handleHover,
+            mouseout: (e: LeafletEvent) => this.resetHover(e, feature.properties?.occurances)
+        });
+    }
+
+    handleHover(e: LeafletEvent)
+    {
+        e.target.setStyle({
+
+            color: "#666",
+            weight: 5,
+            dashArray: '',
+            fillOpacity: .7
+        });
+
+        if(!Leaflet.Browser.ie && !Leaflet.Browser.opera && !Leaflet.Browser.edge)
+        {
+            e.target.bringToFront();
+        }
+    }
+
+    resetHover(e: LeafletEvent, num_occurances: number)
+    {
+        var color;
+        if(this.state.area == "State")
+            color = "white";
+        else
+            color = this.getColor(num_occurances);
+
+        e.target.setStyle({
+            
+            color: color,
+            weight: 2,
+            dashArray: '3'
+        });
+    }
+
     render() {
         const iconMarkup = ReactDOMServer.renderToStaticMarkup(<img id="markerIcon" src={pinIcon} />);
         const customMarkerIcon = divIcon({
@@ -184,7 +202,8 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
         return (
             <LeafletMap id="mapid" center={this.state.mapCenter} zoom={4} minZoom={4}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <GeoJSON data={this.state.hotspots} style={(feature) => (feature?.properties.style)}></GeoJSON>
+                <GeoJSON data={this.state.hotspots} style={(feature) => (feature?.properties.style)} onEachFeature={(feature: Feature, layer: Layer) => this.handleInteraction(feature, layer)}></GeoJSON>
+                <Legend></Legend>
             </LeafletMap>
         );
     }

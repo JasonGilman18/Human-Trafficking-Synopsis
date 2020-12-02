@@ -7,7 +7,6 @@ import DropDownInput from './dropdownInput/dropdownInput';
 import Task, {Task_Data} from './task/task';
 import View, {View_Data} from './view/view';
 import './main.css';
-import { clear } from 'console';
 
 const {ipcRenderer} = window.require('electron');
 
@@ -24,8 +23,6 @@ class Main extends React.Component<MainProps, MainStates>
         super(props);
 
         var temp_input_data: Map<string, string> = new Map([["year_2014", ""], ["year_2015", ""], ["year_2016", ""], ["year_2017", ""], ["type1", ""], ["type2", ""], ["age1", ""], ["age2", ""], ["area", "region"], ["occurances1", "0"], ["occurances2", "100"], ["clearances1", "0"], ["clearances2", "100"]]);
-
-        
 
         this.state = {tasks: [], views: [], inputData: [temp_input_data]};
 
@@ -109,7 +106,7 @@ class Main extends React.Component<MainProps, MainStates>
     {
         e.preventDefault();
 
-        const inputData = this.state.inputData.pop()!;
+        const inputData = this.state.inputData[this.state.inputData.length-1];
         const sql_command = this.createQuery(inputData);
         this.callDB(sql_command).then((data: any) => {
             
