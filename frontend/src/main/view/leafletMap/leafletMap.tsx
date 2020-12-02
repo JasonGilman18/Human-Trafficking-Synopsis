@@ -12,7 +12,7 @@ import { GeoJSON as geojson } from 'geojson';
 
 
 type LeafMapProps = {data: Array<DB_ROW>, area: string | undefined};
-type LeafMapStates = {mapCenter: Leaflet.LatLng, data: Array<DB_ROW>, hotspots: Array<geojson>};
+type LeafMapStates = {mapCenter: Leaflet.LatLng, area: string | undefined, data: Array<DB_ROW>, hotspots: Array<geojson>};
 class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
 {
     constructor(props: any) {
@@ -20,7 +20,7 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
 
         var mapCenter = Leaflet.latLng(39.8283, -98.5795);
 
-        this.state = {mapCenter: mapCenter, data: this.props.data, hotspots: []};
+        this.state = {mapCenter: mapCenter, area: this.props.area, data: this.props.data, hotspots: []};
 
         this.createHotspots = this.createHotspots.bind(this);
     }
@@ -32,6 +32,14 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
             this.createHotspots(data);
     }
 
+    shouldComponentUpdate(nextProps: any, nextState: any)
+    {
+        if(this.state.data != nextProps.data || this.state.area != nextProps.area)
+            return false;
+        else
+            return true;
+    }
+    
     createHotspots(data: Array<DB_ROW>)
     {
         var occurances = new Map<string, number>();
@@ -104,7 +112,7 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
                 weight: 2,
                 opacity: 1,
                 color: 'white',
-                dashArray: '3',
+                dashArray: '0',
                 fillOpacity: .7
             };
             state.properties.style = style;
