@@ -33,7 +33,7 @@ class Legend extends MapControl
                 );
             }
 
-            div.innerHTML = labels.join("<br>");
+            div.innerHTML = "# Offenses<br>" + labels.join("<br>");
             return div;
         };
         

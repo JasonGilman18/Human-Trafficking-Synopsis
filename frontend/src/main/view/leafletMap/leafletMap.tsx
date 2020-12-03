@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import Leaflet, { divIcon, LeafletEvent, Layer, geoJSON, layerGroup } from 'leaflet';
-import { TileLayer, Map as LeafletMap, GeoJSON } from 'react-leaflet';
+import Leaflet, { divIcon, LeafletEvent, Layer, LeafletMouseEvent, popup } from 'leaflet';
+import { TileLayer, Map as LeafletMap, GeoJSON, Popup } from 'react-leaflet';
 import {DB_ROW} from './../../main';
 import 'leaflet/dist/leaflet.css';
 import './leafletMap.css';
@@ -13,7 +13,7 @@ import Legend from './legend';
 
 
 type LeafMapProps = {data: Array<DB_ROW>, area: string | undefined};
-type LeafMapStates = {mapCenter: Leaflet.LatLng, area: string | undefined, data: Array<DB_ROW>, hotspots: Array<Feature>};
+type LeafMapStates = {mapCenter: Leaflet.LatLng, area: string | undefined, data: Array<DB_ROW>, hotspots: Array<Feature>, popups: Array<JSX.Element>};
 class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
 {
     constructor(props: any) {
@@ -21,7 +21,7 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
 
         var mapCenter = Leaflet.latLng(39.8283, -98.5795);
 
-        this.state = {mapCenter: mapCenter, area: this.props.area, data: this.props.data, hotspots: []};
+        this.state = {mapCenter: mapCenter, area: this.props.area, data: this.props.data, hotspots: [], popups: []};
 
         this.createHotspots = this.createHotspots.bind(this);
     }
@@ -156,7 +156,8 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
     {
         layer.on({
             mouseover: this.handleHover,
-            mouseout: (e: LeafletEvent) => this.resetHover(e, feature.properties?.occurances)
+            mouseout: (e: LeafletEvent) => this.resetHover(e, feature.properties?.occurances),
+            click: (e: LeafletMouseEvent) => this.handleClick(e, feature.properties?.name,feature.properties?.occurances)
         });
     }
 
@@ -192,6 +193,14 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
         });
     }
 
+    handleClick(e: LeafletMouseEvent, name: string, occ: string)
+    {
+        var popups = this.state.popups;
+        var new_popup = <Popup position={e.latlng}>{(this.state.area=="State" ? "State: " : "Region: ") + name}<br></br>{"Offenses: " + occ}</Popup>;
+        popups.push(new_popup);
+        this.setState({popups: popups});
+    }
+
     render() {
         const iconMarkup = ReactDOMServer.renderToStaticMarkup(<img id="markerIcon" src={pinIcon} />);
         const customMarkerIcon = divIcon({
@@ -204,6 +213,11 @@ class LeafMap extends React.Component<LeafMapProps, LeafMapStates>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <GeoJSON data={this.state.hotspots} style={(feature) => (feature?.properties.style)} onEachFeature={(feature: Feature, layer: Layer) => this.handleInteraction(feature, layer)}></GeoJSON>
                 <Legend></Legend>
+                {
+                    this.state.popups.map((popup) => (
+                        popup
+                    ))
+                }
             </LeafletMap>
         );
     }
