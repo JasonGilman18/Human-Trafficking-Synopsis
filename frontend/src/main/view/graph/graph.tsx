@@ -11,9 +11,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
     constructor(props: any)
     {
         super(props);
-        console.log(this.props.area);
-        let isRegion = "region" == this.props.area;
-
+        let isRegion = "region" == this.props.area?.toLowerCase();
         let cLocation: string;
         if(isRegion)
             cLocation = "Region"
@@ -21,6 +19,7 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
             cLocation = "State"
 
         let [cName, cData] = this.sortByOccurrence(isRegion);
+
 
         this.state = {
             defaultProps: {
@@ -53,6 +52,10 @@ class GraphView extends React.Component<GraphViewProps, GraphViewStates>
 
     sortByOccurrence(isRegion: boolean){
         let data = this.props.data;
+
+        if(data.length == 0)
+            return [[], []];
+
         let stateCount = 6;
         let topState = [];
         let topCount = [];
