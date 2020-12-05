@@ -377,7 +377,7 @@ class Main extends React.Component<MainProps, MainStates>
                             </div>
                             <div className="inputTypeContainer">
                                 <DropDownInput label="Area of Interest" values={["Region", "State"]} inputName={"area"} func_handleFormInput={this.handleFormInput.bind(this)}></DropDownInput>
-                                <TextInput label="Number of Occurances" placeholder1="0" placeholder2="100" inputNames={["occurances1", "occurances2"]} func_handleFormInput={this.handleFormInput.bind(this)}></TextInput>
+                                <TextInput label="Number of Occurrences" placeholder1="0" placeholder2="100" inputNames={["occurances1", "occurances2"]} func_handleFormInput={this.handleFormInput.bind(this)}></TextInput>
                                 <TextInput label="Number of Clearances" placeholder1="0" placeholder2="100" inputNames={["clearances1", "clearances2"]} func_handleFormInput={this.handleFormInput.bind(this)}></TextInput>
                             </div>
                         </div>
